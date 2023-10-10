@@ -17,14 +17,11 @@ export const getPopularMovie = async () => {
 };
 
 export const getSearchMovies = async (q) => {
-  const searchMovies = await axios.get(
-    `${searchUrl}?query=${q}`,
-    {
-      headers: {
-        Authorization: `${apiKey}`,
-      },
-    }
-  );
+  const searchMovies = await axios.get(`${searchUrl}?query=${q}`, {
+    headers: {
+      Authorization: `${apiKey}`,
+    },
+  });
   return searchMovies.data.results;
 };
 
