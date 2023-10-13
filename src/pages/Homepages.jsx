@@ -4,37 +4,12 @@ import { Carousel } from "../components/Carousel";
 import { Slider } from "../components/Slider";
 import { FooterComponent } from "../components/Footer";
 import { TrailerProvider } from "../api/TrailerContext";
-import { Login } from "../components/Login";
-import { useState } from "react";
-import { Register } from "../components/Register";
 
 export const Homepages = () => {
-  const [showLoginPopup, setShowLoginPopup] = useState(false);
-  const [showRegisterPopup, setShowRegisterPopup] = useState(false);
-
   return (
     <div className="bg-slate-900">
-      {showLoginPopup && (
-        <>
-          <Login
-            setShowLoginPopup={setShowLoginPopup}
-            setShowRegisterPopup={setShowRegisterPopup}
-          />
-        </>
-      )}
-      {showRegisterPopup && (
-        <>
-          <Register
-            setShowLoginPopup={setShowLoginPopup}
-            setShowRegisterPopup={setShowRegisterPopup}
-          />
-        </>
-      )}
       <div className="absolute top-0 right-0 bottom-0 left-0">
-        <Navbar
-          setShowLoginPopup={setShowLoginPopup}
-          setShowRegisterPopup={setShowRegisterPopup}
-        />
+        <Navbar />
       </div>
       <TrailerProvider>
         <Carousel />
