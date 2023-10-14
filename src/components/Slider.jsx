@@ -1,19 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode } from "swiper/modules";
-import { getPopularMovie } from "../api/ApiFetch";
+import { fetchMovie } from "../services/get-movie";
 import { useNavigate } from "react-router-dom";
-const baseImg = process.env.REACT_APP_BASEIMGURL;
+const baseImg = process.env.REACT_APP_BASEIMAGE_URL;
 export const Slider = () => {
-  const [popularMovies, setpopularMovies] = useState([]);
+  const [sliderMovie, setSliderMovie] = useState([]);
   const navigate = useNavigate();
-  useEffect(() => {
-    getPopularMovie().then((results) => {
-      setpopularMovies(results);
-    });
-  }, []);
 
-   const handleGoToDetails = (movie_id) => {
+  const getMovies = async () => {
+    const data = await fetchMovie();
+    console.log(data, "ini untuk slider")
+    setSliderMovie(data.data);
+  };
+
+  useEffect(() => {
+    getMovies()
+  }, []);
+  const handleGoToDetails = (movie_id) => {
     navigate(`/details/${movie_id}`);
   };
   return (
@@ -29,7 +33,7 @@ export const Slider = () => {
           modules={[FreeMode]}
           className="mySwiper"
         >
-          {popularMovies.map((movie) => (
+          {sliderMovie.map((movie) => (
             <SwiperSlide key={movie.id}>
               <div className="mx-10 my-10">
                 <img

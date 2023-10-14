@@ -1,49 +1,27 @@
 import React, { useState } from "react";
-import { getPopularMovie } from "../api/ApiFetch";
+// import { getPopularMovie } from "../api/ApiFetch";
 import { useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
-import { useTrailer } from "../api/TrailerContext";
 import axios from "axios";
+import { fetchMovie } from "../services/get-movie";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/autoplay";
 
 export const Carousel = () => {
   const [popularMovies, setpopularMovies] = useState([]);
-  const { trailerData, setTrailer } = useTrailer();
+
+  const getMovies = async () => {
+    const data = await fetchMovie();
+    console.log(data)
+    setpopularMovies(data.data);
+  };
 
   useEffect(() => {
-    getPopularMovie().then((results) => {
-      setpopularMovies(results);
-    });
+    getMovies()
   }, []);
 
-  const fetchMovieTrailer = async (id) => {
-    try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_BASEURL}/${id}/videos`,
-        {
-          headers: {
-            accept: "application/json",
-            Authorization: `${process.env.REACT_APP_APIKEY}`,
-          },
-        }
-      );
-
-      const trailer = response.data.results.find(
-        (result) => result.type === "Trailer" || result.type === "Teaser"
-      );
-
-      if (trailer) {
-        setTrailer(trailer);
-      } else {
-        console.log("Tidak ada trailer yang tersedia.");
-      }
-    } catch (error) {
-      console.error("Error fetching trailer:", error);
-    }
-  };
   return (
     <div>
       <Swiper
@@ -65,7 +43,7 @@ export const Carousel = () => {
             <SwiperSlide key={movie.id}>
               <div className="h-screen w-full">
                 <img
-                  src={`${process.env.REACT_APP_BASEIMGURL}/${movie.backdrop_path}`}
+                  src={`${process.env.REACT_APP_BASEIMAGE_URL}/${movie.backdrop_path}`}
                   alt=""
                   className="absolute top-0 left-0 w-full bg-cover z-0"
                 />
@@ -78,10 +56,7 @@ export const Carousel = () => {
                   <p className="text-white text-lg w-5/12 py-6">
                     {movie.overview}
                   </p>
-                  <button
-                    className="w-40 h-10 rounded-full border-2 border-red-600 bg-red-600 text-white flex justify-center items-center gap-2"
-                    onClick={() => fetchMovieTrailer(movie.id)}
-                  >
+                  <button className="w-40 h-10 rounded-full border-2 border-red-600 bg-red-600 text-white flex justify-center items-center gap-2">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -101,22 +76,10 @@ export const Carousel = () => {
                         d="M15.91 11.672a.375.375 0 010 .656l-5.603 3.113a.375.375 0 01-.557-.328V8.887c0-.286.307-.466.557-.327l5.603 3.112z"
                       />
                     </svg>
-                    Watch Trailer
+                    Details
                   </button>
                 </div>
               </div>
-              {trailerData && (
-                <div className="trailer-container">
-                  <iframe
-                    title="Trailer"
-                    width="560"
-                    height="315"
-                    src={`https://www.youtube.com/embed/${trailerData.key}`}
-                    className="absolute top-0 right-40 bottom-20 left-30 m-auto z-50 rounded-2xl"
-                    allowFullScreen
-                  ></iframe>
-                </div>
-              )}
             </SwiperSlide>
           ))}
         </div>

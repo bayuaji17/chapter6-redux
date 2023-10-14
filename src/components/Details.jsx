@@ -1,55 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { useTrailer } from "../api/TrailerContext";
 const baseUrl = process.env.REACT_APP_BASEURL;
 const apiKey = process.env.REACT_APP_APIKEY;
-const baseImg = process.env.REACT_APP_BASEIMGURL;
+const baseImg = process.env.REACT_APP_BASEIMAGE_URL;
 
 export const Details = () => {
   const { id } = useParams();
   const [detailsMovie, setDetailsMovie] = useState([]);
-  const { trailerData, setTrailer } = useTrailer();
 
-  useEffect(() => {
-    const fetchDetailsMovie = async () => {
-      try {
-        const response = await axios.get(`${baseUrl}/${id}`, {
-          headers: {
-            accept: "application/json",
-            Authorization: `${apiKey}`,
-          },
-        });
 
-        setDetailsMovie(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchDetailsMovie();
-  }, [id]);
-  const handleWatchTrailer = async () => {
-    try {
-      const response = await axios.get(`${baseUrl}/${id}/videos`, {
-        headers: {
-          accept: "application/json",
-          Authorization: `${apiKey}`,
-        },
-      });
-
-      const trailer = response.data.results.find(
-        (result) => result.type === "Trailer" || result.type === "Teaser"
-      );
-
-      if (trailer) {
-        setTrailer(trailer);
-      } else {
-        console.log("Tidak ada trailer yang tersedia.");
-      }
-    } catch (error) {
-      console.error("Error fetching trailer:", error);
-    }
-  };
 
   return (
     <div>
@@ -69,9 +29,9 @@ export const Details = () => {
         <p className="text-white text-6xl">{detailsMovie.original_title} </p>
         <p className="text-white text-lg">( {detailsMovie.release_date} )</p>
         <p className="text-white text-md py-4">
-          {detailsMovie.genres
+          {/* {detailsMovie.genres
             ? detailsMovie.genres.map((genre) => genre.name).join(", ")
-            : ""}
+            : ""} */}
         </p>
         <p className="text-white text-lg w-5/12 py-6">
           {detailsMovie.overview}
@@ -96,7 +56,6 @@ export const Details = () => {
         </p>
         <button
           className="w-40 h-10 rounded-full border-2 border-red-600 bg-red-600 text-white flex justify-center items-center gap-2"
-          onClick={handleWatchTrailer}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -117,20 +76,8 @@ export const Details = () => {
               d="M15.91 11.672a.375.375 0 010 .656l-5.603 3.113a.375.375 0 01-.557-.328V8.887c0-.286.307-.466.557-.327l5.603 3.112z"
             />
           </svg>
-          Watch Trailer
+          Watch Trailer(OFF)
         </button>
-        {trailerData && (
-          <div className="trailer-container">
-            <iframe
-              title="Trailer"
-              width="560"
-              height="315"
-              src={`https://www.youtube.com/embed/${trailerData.key}`}
-              className="absolute top-0 right-0 bottom-20 left-30 m-auto"
-              allowFullScreen
-            ></iframe>
-          </div>
-        )}
       </div>
     </div>
   );

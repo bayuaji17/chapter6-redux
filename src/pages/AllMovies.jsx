@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { getAllMovies } from "../api/ApiFetch";
 import { useNavigate } from "react-router-dom";
 import { FooterComponent } from "../components/Footer";
-const baseImg = process.env.REACT_APP_BASEIMGURL;
+import { fetchMovie } from "../services/get-movie";
+const baseImg = process.env.REACT_APP_BASEIMAGE_URL;
 export const AllMovies = () => {
   const [allMovie, setAllMovie] = useState([]);
   const navigate = useNavigate();
+
+  const getMovies = async () => {
+    const data = await fetchMovie();
+    console.log(data)
+    setAllMovie(data.data);
+  };
+
   useEffect(() => {
-    getAllMovies().then((results) => {
-      setAllMovie(results);
-    });
+    getMovies()
   }, []);
   const handleGoToDetails = (movie_id) => {
     navigate(`/details/${movie_id}`);

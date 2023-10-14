@@ -1,0 +1,3 @@
+REACT_APP_BASEURL=https://shy-cloud-3319.fly.dev
+REACT_APP_BASEIMAGE_URL=https://image.tmdb.org/t/p/original
+REACT_APP_APIKEY_TEMPORARY=
