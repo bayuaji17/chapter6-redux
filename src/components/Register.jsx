@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import FormInput from "./Form/FormInput";
 import { Link } from "react-router-dom";
+import { useCreateUser } from "../utils/auth/register_user";
 
-export const Register = ({ setShowLoginPopup, setShowRegisterPopup }) => {
+export const Register = () => {
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -11,9 +12,19 @@ export const Register = ({ setShowLoginPopup, setShowRegisterPopup }) => {
 
   const [errors, setErrors] = useState({});
 
+  const { mutate: registerUser } = useCreateUser();
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+  };
+
+  const handleRegisterUser = () => {
+    registerUser({
+      email: formData.email,
+      name: formData.username,
+      password: formData.password,
+    });
   };
 
   const background =
@@ -64,7 +75,10 @@ export const Register = ({ setShowLoginPopup, setShowRegisterPopup }) => {
               onChange={handleInputChange}
               error={errors.password}
             />
-            <button className="py-2 px-4 mt-2 font-semibold bg-[#eb0612] rounded-md text-white w-full hover:scale-y-105">
+            <button
+              onClick={() => handleRegisterUser()}
+              className="py-2 px-4 mt-2 font-semibold bg-[#eb0612] rounded-md text-white w-full hover:scale-y-105"
+            >
               Register
             </button>
           </div>

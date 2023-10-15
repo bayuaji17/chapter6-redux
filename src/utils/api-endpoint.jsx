@@ -3,6 +3,6 @@ export const API_ENDPOINT = {
   LOGIN_MOVIE: "/api/v1/auth/login",
   AUTH_GOOGLE: "/api/v1/auth/google",
   ALL_MOVIE: "/api/v1/movie/popular",
-  MOVIE_DETAILS: "/api/v1/movie/",
+  MOVIE_DETAILS: (id) => `/api/v1/movie/${id}&append_to_response=videos`,
   SEARCH_MOVIE: "/api/v1/search/movie",
 };

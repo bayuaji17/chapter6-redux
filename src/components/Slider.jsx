@@ -3,20 +3,30 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode } from "swiper/modules";
 import { fetchMovie } from "../services/get-movie";
 import { useNavigate } from "react-router-dom";
+import { CookieKeys, CookieStorage } from "../utils/cookies";
 const baseImg = process.env.REACT_APP_BASEIMAGE_URL;
 export const Slider = () => {
+  const authToken = CookieStorage.get(CookieKeys.AuthToken);
   const [sliderMovie, setSliderMovie] = useState([]);
   const navigate = useNavigate();
 
   const getMovies = async () => {
-    const data = await fetchMovie();
-    console.log(data, "ini untuk slider")
-    setSliderMovie(data.data);
+    try {
+      const data = await fetchMovie(authToken);
+      setSliderMovie(data.data);
+    } catch (error) {
+      console.error("Error fetching movies:", error);
+    }
   };
 
   useEffect(() => {
-    getMovies()
-  }, []);
+    if (authToken) {
+      getMovies();
+    } else {
+      navigate("/login");
+    }
+  }, [authToken]);
+
   const handleGoToDetails = (movie_id) => {
     navigate(`/details/${movie_id}`);
   };

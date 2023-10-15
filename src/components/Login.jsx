@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import FormInput from "./Form/FormInput";
 import { Link } from "react-router-dom";
+import { useLoginUser } from "../utils/auth/login_user";
 
-export const Login = ({ setShowLoginPopup, setShowRegisterPopup }) => {
+export const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -10,9 +11,18 @@ export const Login = ({ setShowLoginPopup, setShowRegisterPopup }) => {
 
   const [errors, setErrors] = useState({});
 
+  const { mutate: loginUser } = useLoginUser();
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+  };
+
+  const handleLoginUser = () => {
+    loginUser({
+      email: formData.email,
+      password: formData.password,
+    });
   };
 
   const background =
@@ -35,13 +45,13 @@ export const Login = ({ setShowLoginPopup, setShowRegisterPopup }) => {
           </p>
           <div className="flex flex-col gap-2 w-full mt-4">
             <FormInput
-              label="Username"
-              type="text"
-              placeholder="Enter your username"
-              name="username"
-              value={formData.username}
+              label="Email"
+              type="email"
+              placeholder="Enter your email"
+              name="email"
+              value={formData.email}
               onChange={handleInputChange}
-              error={errors.username}
+              error={errors.email}
             />
             <FormInput
               label="Password"
@@ -52,7 +62,10 @@ export const Login = ({ setShowLoginPopup, setShowRegisterPopup }) => {
               onChange={handleInputChange}
               error={errors.password}
             />
-            <button className="py-2 px-4 mt-2 font-semibold bg-[#eb0612] rounded-md text-white w-full hover:scale-y-105">
+            <button
+              onClick={() => handleLoginUser()}
+              className="py-2 px-4 mt-2 font-semibold bg-[#eb0612] rounded-md text-white w-full hover:scale-y-105"
+            >
               Log in
             </button>
           </div>

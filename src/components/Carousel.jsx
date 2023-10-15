@@ -3,24 +3,34 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
-import axios from "axios";
 import { fetchMovie } from "../services/get-movie";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/autoplay";
+import { CookieKeys, CookieStorage } from "../utils/cookies";
+import { Link, useNavigate } from "react-router-dom";
 
 export const Carousel = () => {
-  const [popularMovies, setpopularMovies] = useState([]);
+  const authToken = CookieStorage.get(CookieKeys.AuthToken);
+  const [popularMovies, setPopularMovies] = useState([]);
+  const navigate = useNavigate();
 
   const getMovies = async () => {
-    const data = await fetchMovie();
-    console.log(data)
-    setpopularMovies(data.data);
+    try {
+      const data = await fetchMovie(authToken);
+      setPopularMovies(data.data);
+    } catch (error) {
+      console.error("Error fetching movies:", error);
+    }
   };
 
   useEffect(() => {
-    getMovies()
-  }, []);
+    if (authToken) {
+      getMovies();
+    } else {
+      navigate("/login");
+    }
+  }, [authToken]);
 
   return (
     <div>
@@ -50,34 +60,34 @@ export const Carousel = () => {
                 <div className="absolute top-0 left-0 w-full h-full bg-opacity-60 bg-black z-10"></div>
                 <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-black to-transparent"></div>
                 <div className="absolute top-40 z-10 mx-10 my-10">
-                  <p className="text-white text-7xl py-8">
-                    {movie.original_title}
-                  </p>
-                  <p className="text-white text-lg w-5/12 py-6">
+                  <p className="text-white text-7xl py-8">{movie.title}</p>
+                  <p className="text-white text-lg w-1/2 py-6">
                     {movie.overview}
                   </p>
-                  <button className="w-40 h-10 rounded-full border-2 border-red-600 bg-red-600 text-white flex justify-center items-center gap-2">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-6 h-6"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                      />
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M15.91 11.672a.375.375 0 010 .656l-5.603 3.113a.375.375 0 01-.557-.328V8.887c0-.286.307-.466.557-.327l5.603 3.112z"
-                      />
-                    </svg>
-                    Details
-                  </button>
+                  <Link to={`details/${movie.id}`}>
+                    <button className="w-40 h-10 rounded-full border-2 border-red-600 bg-red-600 text-white flex justify-center items-center gap-2">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-6 h-6"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M15.91 11.672a.375.375 0 010 .656l-5.603 3.113a.375.375 0 01-.557-.328V8.887c0-.286.307-.466.557-.327l5.603 3.112z"
+                        />
+                      </svg>
+                      Watch Trailer
+                    </button>
+                  </Link>
                 </div>
               </div>
             </SwiperSlide>

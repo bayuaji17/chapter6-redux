@@ -1,10 +1,18 @@
 import { API_ENDPOINT } from "../utils/api-endpoint";
 import http from "../utils/http";
 
-const fetchMovie = async () => {
-  const { data } = await http.get(`${API_ENDPOINT.ALL_MOVIE}`);
-//   console.log(data,"ini isinya")
-  return data;
+const fetchMovie = async (authToken) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    };
+    const { data } = await http.get(`${API_ENDPOINT.ALL_MOVIE}`, config);
+    return data;
+  } catch (error) {
+    throw error;
+  }
 };
 
 export { fetchMovie };
