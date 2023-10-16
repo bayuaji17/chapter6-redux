@@ -33,6 +33,8 @@ export const Details = () => {
     setDetailsMovie(response.data.data);
   };
 
+  const date = detailsMovie && detailsMovie.release_date.substring(0, 4);
+  const rate = detailsMovie && detailsMovie.vote_average.toFixed(1)
   return (
     <div>
       <div className="w-full h-screen">
@@ -48,9 +50,10 @@ export const Details = () => {
       <div className="absolute top-0 left-0 w-full h-full bg-opacity-60 bg-black z-10"></div>
       <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-black to-transparent"></div>
       <div className="absolute top-40 z-20 mx-8">
-        <p className="text-white text-6xl">{detailsMovie.original_title} </p>
-        <p className="text-white text-lg">{detailsMovie.release_date} </p>
-        <p className="text-white text-md py-4">
+        <p className="text-white text-6xl font-semibold">
+          {detailsMovie.original_title}
+        </p>
+        <p className="text-white text-md py-4 text-2xl font-medium">
           {detailsMovie.genres
             ? detailsMovie.genres.map((genre) => genre.name).join(", ")
             : ""}
@@ -58,8 +61,24 @@ export const Details = () => {
         <p className="text-white text-lg w-5/12 py-6">
           {detailsMovie.overview}
         </p>
-
-        <p className="text-white text-2xl w-5/12 py-6 flex flex-row gap-4 items-center">
+        <p className="text-white text-xl items-center flex gap-2">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-6 h-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z"
+            />
+          </svg>
+          {date}{" "}
+        </p>
+        <p className="text-white text-xl w-5/12 py-6 flex flex-row gap-2 items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -74,7 +93,7 @@ export const Details = () => {
               d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"
             />
           </svg>
-          {detailsMovie.vote_average} / 10
+          {rate}/10
         </p>
         <button className="w-40 h-10 rounded-full border-2 border-red-600 bg-red-600 text-white flex justify-center items-center gap-2">
           <svg
