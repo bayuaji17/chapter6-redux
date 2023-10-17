@@ -5,4 +5,5 @@ export const API_ENDPOINT = {
   ALL_MOVIE: "/api/v1/movie/popular",
   MOVIE_DETAILS: (id) => `/api/v1/movie/${id}&append_to_response=videos`,
   SEARCH_MOVIE: "/api/v1/search/movie",
+  AUTH_ME:"/api/v1/auth/me"
 };

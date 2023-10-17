@@ -3,17 +3,33 @@ import { useNavigate } from "react-router-dom";
 import { FooterComponent } from "../components/Footer";
 import { fetchMovie } from "../services/get-movie";
 import { CookieKeys, CookieStorage } from "../utils/cookies";
+import { Navbar } from "../components/navbar/Navbar";
 
 export const AllMovies = () => {
   const authToken = CookieStorage.get(CookieKeys.AuthToken);
   const baseImg = process.env.REACT_APP_BASEIMAGE_URL;
   const [allMovie, setAllMovie] = useState([]);
+  const [isFirstPage, setIsFirstPage] = useState(true);
+  const [isLastPage, setIsLastPage] = useState(false);
   const navigate = useNavigate();
+  const [pageNow, setPageNow] = useState(1);
+  const loadNextPage = () => {
+    if (!isLastPage) {
+      setPageNow(pageNow + 1);
+    }
+  };
 
-  const getMovies = async () => {
+  // Function to load the previous page
+  const loadPreviousPage = () => {
+    if (!isFirstPage) {
+      setPageNow(pageNow - 1);
+    }
+  };
+  const getMovies = async (page) => {
     try {
-      const data = await fetchMovie(authToken);
+      const data = await fetchMovie(authToken, page);
       setAllMovie(data.data);
+      setIsFirstPage(page === 1);
     } catch (error) {
       console.error("Error fetching movies:", error);
     }
@@ -21,20 +37,39 @@ export const AllMovies = () => {
 
   useEffect(() => {
     if (authToken) {
-      getMovies();
+      getMovies(pageNow);
     } else {
       navigate("/login");
     }
-  }, [authToken]);
+  }, [authToken, pageNow]);
 
   const handleGoToDetails = (movie_id) => {
     navigate(`/details/${movie_id}`);
   };
   return (
     <div className="bg-slate-900">
-      <h1 className="font-black text-4xl px-10 py-5 text-red-500 ">
+      <div className="absolute top-0 right-0 left-0">
+        <Navbar />
+      </div>
+      <h1 className="font-black text-4xl px-10 pt-20 pb-5 text-red-500 ">
         All Movies
       </h1>
+      <div className="flex flex-row justify-end mx-14">
+        <button
+          onClick={loadPreviousPage}
+          disabled={isFirstPage}
+          className="mr-3 flex h-8 items-center justify-center rounded-lg bg-red-600 px-3 text-sm font-medium text-white w-20 hover:bg-red-800"
+        >
+          Previous
+        </button>
+        <button
+          onClick={loadNextPage}
+          disabled={isLastPage}
+          className="mr-3 flex h-8 items-center justify-center rounded-lg bg-red-600 px-3 text-sm font-medium text-white w-20 hover:bg-red-800"
+        >
+          Next
+        </button>
+      </div>
       <div className="flex flex-wrap justify-around">
         {allMovie.map((movie, index) => (
           <div key={index}>

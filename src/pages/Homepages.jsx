@@ -17,19 +17,18 @@ export const Homepages = () => {
     }
   });
 
-  const handleLogout = () => {
-    CookieStorage.remove(CookieKeys.AuthToken, {
-      path: "/",
-      expires: new Date(0),
-    });
-
-    navigate("/login");
-  };
+  // const handleLogout = () => {
+  //   CookieStorage.remove(CookieKeys.AuthToken, {
+  //     path: "/",
+  //     expires: new Date(0),
+  //   });
+  //   navigate("/login");
+  // };
 
   return (
     <div className="bg-slate-900">
       <div className="absolute top-0 right-0 bottom-0 left-0">
-        <Navbar handleLogout={handleLogout} />
+        <Navbar/>
       </div>
       <Carousel />
       <div className="flex flex-row justify-between container mx-auto px-10 mt-5">
