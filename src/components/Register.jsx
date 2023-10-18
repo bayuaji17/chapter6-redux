@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import FormInput from "./Form/FormInput";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useCreateUser } from "../utils/auth/register_user";
 import {  useGoogleLogin } from "@react-oauth/google";
 
 
 export const Register = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -27,6 +28,7 @@ export const Register = () => {
       name: formData.username,
       password: formData.password,
     });
+    navigate("/login")
   };
 
   const background =
