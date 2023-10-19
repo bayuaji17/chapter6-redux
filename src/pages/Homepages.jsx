@@ -5,7 +5,6 @@ import { Slider } from "../components/Slider";
 import { FooterComponent } from "../components/Footer";
 import { useEffect } from "react";
 import { CookieKeys, CookieStorage } from "../utils/cookies";
-import { toast } from "react-toastify";
 
 export const Homepages = () => {
   const navigate = useNavigate();
@@ -18,13 +17,6 @@ export const Homepages = () => {
     }
   });
 
-  // const handleLogout = () => {
-  //   CookieStorage.remove(CookieKeys.AuthToken, {
-  //     path: "/",
-  //     expires: new Date(0),
-  //   });
-  //   navigate("/login");
-  // };
 
   return (
     <div className="bg-slate-900">

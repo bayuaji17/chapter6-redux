@@ -18,8 +18,6 @@ export const AllMovies = () => {
       setPageNow(pageNow + 1);
     }
   };
-
-  // Function to load the previous page
   const loadPreviousPage = () => {
     if (!isFirstPage) {
       setPageNow(pageNow - 1);

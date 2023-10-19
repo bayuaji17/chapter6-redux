@@ -36,7 +36,6 @@ export const SearchResult = () => {
     } else
     navigate("/login") 
   });
-  // console.log(searchQuery, "ini hasil search");
   const handleGoToDetails = (movie_id) => {
     navigate(`/details/${movie_id}`);
   };
