@@ -4,6 +4,7 @@ import { Button } from "../Button";
 import { Search } from "../Search";
 import { useNavigate } from "react-router-dom";
 import { CookieKeys, CookieStorage } from "../../utils/cookies";
+import { toast } from "react-toastify";
 
 export const Navbar = () => {
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ export const Navbar = () => {
       path: "/",
       expires: new Date(0),
     });
+    toast.success("Log Out Berhasil!");
     navigate("/login");
   };
 

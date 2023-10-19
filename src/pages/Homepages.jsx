@@ -5,6 +5,7 @@ import { Slider } from "../components/Slider";
 import { FooterComponent } from "../components/Footer";
 import { useEffect } from "react";
 import { CookieKeys, CookieStorage } from "../utils/cookies";
+import { toast } from "react-toastify";
 
 export const Homepages = () => {
   const navigate = useNavigate();
