@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// import { getPopularMovie } from "../api/ApiFetch";
 import { useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";

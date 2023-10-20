@@ -39,6 +39,15 @@ export const SearchResult = () => {
     });
   };
 
+<<<<<<< HEAD
+=======
+  useEffect(() => {
+    if (authToken) {
+      searchData();
+    } else
+    navigate("/login") 
+  });
+>>>>>>> c4727d3c5a7ef5f98c8e4c8729e2e8e90533798f
   const handleGoToDetails = (movie_id) => {
     navigate(`/details/${movie_id}`);
   };
