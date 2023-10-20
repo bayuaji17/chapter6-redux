@@ -3,27 +3,10 @@ import { Navbar } from "../components/navbar/Navbar";
 import { Carousel } from "../components/Carousel";
 import { Slider } from "../components/Slider";
 import { FooterComponent } from "../components/Footer";
-<<<<<<< HEAD
 import { useGetDataUser } from "../utils/auth/get_user";
 
 export const Homepages = () => {
   const { data: getUser } = useGetDataUser();
-=======
-import { useEffect } from "react";
-import { CookieKeys, CookieStorage } from "../utils/cookies";
-
-export const Homepages = () => {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const authToken = CookieStorage.get(CookieKeys.AuthToken);
-
-    if (!authToken) {
-      navigate("/login");
-    }
-  });
-
->>>>>>> c4727d3c5a7ef5f98c8e4c8729e2e8e90533798f
 
   return (
     <div className="bg-slate-900">

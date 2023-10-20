@@ -4,8 +4,9 @@ import { FreeMode } from "swiper/modules";
 import { fetchMovie } from "../services/get-movie";
 import { useNavigate } from "react-router-dom";
 import { CookieKeys, CookieStorage } from "../utils/cookies";
-const baseImg = process.env.REACT_APP_BASEIMAGE_URL;
+
 export const Slider = () => {
+  const baseImg = process.env.REACT_APP_BASEIMAGE_URL;
   const authToken = CookieStorage.get(CookieKeys.AuthToken);
   const [sliderMovie, setSliderMovie] = useState([]);
   const navigate = useNavigate();

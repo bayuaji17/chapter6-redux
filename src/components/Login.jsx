@@ -66,10 +66,7 @@ export const Login = () => {
     onSuccess: (codeResponse) =>
       registerLoginWithGoogleAction(codeResponse.access_token),
   });
-<<<<<<< HEAD
 
-=======
->>>>>>> c4727d3c5a7ef5f98c8e4c8729e2e8e90533798f
   return (
     <div
       className="w-full relative bg-center bg-cover bg-no-repeat h-screen"

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Details } from "../components/Details";
 import { Navbar } from "../components/navbar/Navbar";
 import { useGetDataUser } from "../utils/auth/get_user";

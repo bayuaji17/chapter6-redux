@@ -3,11 +3,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useMovieDataQuery } from "../services/get-search-movie";
 import { Navbar } from "../components/navbar/Navbar";
-import { CookieKeys, CookieStorage } from "../utils/cookies";
 import { useGetDataUser } from "../utils/auth/get_user";
 
 export const SearchResult = () => {
-  const authToken = CookieStorage.get(CookieKeys.AuthToken);
   const { query } = useParams();
   const baseImg = process.env.REACT_APP_BASEIMAGE_URL;
   const [searchResult, setSearchResult] = useState([]);
@@ -39,15 +37,6 @@ export const SearchResult = () => {
     });
   };
 
-<<<<<<< HEAD
-=======
-  useEffect(() => {
-    if (authToken) {
-      searchData();
-    } else
-    navigate("/login") 
-  });
->>>>>>> c4727d3c5a7ef5f98c8e4c8729e2e8e90533798f
   const handleGoToDetails = (movie_id) => {
     navigate(`/details/${movie_id}`);
   };

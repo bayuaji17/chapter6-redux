@@ -11,11 +11,7 @@ const LoginUser = async (input) => {
     CookieStorage.set(CookieKeys.AuthToken, result.data.data.token);
     return result && toast.success("Login Success");
   } catch (error) {
-<<<<<<< HEAD
     return toast.error(error.response.data.message);
-=======
-    return toast.error("Email / Password yang anda input salah !")
->>>>>>> c4727d3c5a7ef5f98c8e4c8729e2e8e90533798f
   }
 };
 
