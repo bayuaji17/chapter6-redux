@@ -1,35 +1,17 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Navbar } from "../components/navbar/Navbar";
 import { Carousel } from "../components/Carousel";
 import { Slider } from "../components/Slider";
 import { FooterComponent } from "../components/Footer";
-import { useEffect } from "react";
-import { CookieKeys, CookieStorage } from "../utils/cookies";
-import { toast } from "react-toastify";
+import { useGetDataUser } from "../utils/auth/get_user";
 
 export const Homepages = () => {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const authToken = CookieStorage.get(CookieKeys.AuthToken);
-
-    if (!authToken) {
-      navigate("/login");
-    }
-  });
-
-  // const handleLogout = () => {
-  //   CookieStorage.remove(CookieKeys.AuthToken, {
-  //     path: "/",
-  //     expires: new Date(0),
-  //   });
-  //   navigate("/login");
-  // };
+  const { data: getUser } = useGetDataUser();
 
   return (
     <div className="bg-slate-900">
       <div className="absolute top-0 right-0 bottom-0 left-0">
-        <Navbar/>
+        <Navbar />
       </div>
       <Carousel />
       <div className="flex flex-row justify-between container mx-auto px-10 mt-5">

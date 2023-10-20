@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useMovieDataQuery } from "../services/get-search-movie";
 import { Navbar } from "../components/navbar/Navbar";
 import { CookieKeys, CookieStorage } from "../utils/cookies";
+import { useGetDataUser } from "../utils/auth/get_user";
 
 export const SearchResult = () => {
   const authToken = CookieStorage.get(CookieKeys.AuthToken);
@@ -18,6 +19,14 @@ export const SearchResult = () => {
     query: query || "",
   });
 
+  const { data: getUser, isSuccess } = useGetDataUser();
+
+  useEffect(() => {
+    if (isSuccess) {
+      searchData();
+    }
+  });
+
   const searchData = () => {
     if (searchQuery) {
       setSearchResult(searchQuery.data);
@@ -30,13 +39,6 @@ export const SearchResult = () => {
     });
   };
 
-  useEffect(() => {
-    if (authToken) {
-      searchData();
-    } else
-    navigate("/login") 
-  });
-  // console.log(searchQuery, "ini hasil search");
   const handleGoToDetails = (movie_id) => {
     navigate(`/details/${movie_id}`);
   };

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import { API_ENDPOINT } from "../utils/api-endpoint";
 import http from "../utils/http";
 
@@ -34,7 +33,7 @@ export const Details = () => {
   };
 
   const date = detailsMovie && detailsMovie.release_date.substring(0, 4);
-  const rate = detailsMovie && detailsMovie.vote_average.toFixed(1)
+  const rate = detailsMovie && detailsMovie.vote_average.toFixed(1);
   return (
     <div>
       <div className="w-full h-screen">

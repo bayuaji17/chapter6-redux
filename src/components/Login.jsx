@@ -70,10 +70,7 @@ export const Login = () => {
     onSuccess: (codeResponse) =>
       registerLoginWithGoogleAction(codeResponse.access_token),
   });
-  // const loginWithGoogle = useGoogleLogin({
-  //   onSuccess: codeResponse => console.log(codeResponse.code),
-  //   flow: 'auth-code',
-  // });
+
   return (
     <div
       className="w-full relative bg-center bg-cover bg-no-repeat h-screen"

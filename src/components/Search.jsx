@@ -3,7 +3,9 @@ import { useNavigate } from "react-router-dom";
 
 export const Search = () => {
   const [result, setResult] = useState();
+
   const navigate = useNavigate();
+
   const goToSearchResults = (e) => {
     e.preventDefault();
     navigate(`/details/search/${result}`);

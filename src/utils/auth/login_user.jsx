@@ -11,7 +11,7 @@ const LoginUser = async (input) => {
     CookieStorage.set(CookieKeys.AuthToken, result.data.data.token);
     return result && toast.success("Login Success");
   } catch (error) {
-    return toast.error(error.response.data.message)
+    return toast.error(error.response.data.message);
   }
 };
 

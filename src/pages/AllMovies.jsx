@@ -4,6 +4,7 @@ import { FooterComponent } from "../components/Footer";
 import { fetchMovie } from "../services/get-movie";
 import { CookieKeys, CookieStorage } from "../utils/cookies";
 import { Navbar } from "../components/navbar/Navbar";
+import { useGetDataUser } from "../utils/auth/get_user";
 
 export const AllMovies = () => {
   const authToken = CookieStorage.get(CookieKeys.AuthToken);
@@ -35,13 +36,13 @@ export const AllMovies = () => {
     }
   };
 
+  const { data: getUser, isSuccess } = useGetDataUser();
+
   useEffect(() => {
-    if (authToken) {
+    if (isSuccess) {
       getMovies(pageNow);
-    } else {
-      navigate("/login");
     }
-  }, [authToken, pageNow]);
+  }, [pageNow]);
 
   const handleGoToDetails = (movie_id) => {
     navigate(`/details/${movie_id}`);
