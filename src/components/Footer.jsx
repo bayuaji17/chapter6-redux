@@ -8,9 +8,7 @@ export const FooterComponent = () => {
           <footer className="rounded-lg shadow">
             <div className="mx-auto w-full">
               <span className="text-sm text-white flex flex-row gap-2">
-                ||<a href="https://banwork.dev/">Bayu Aji Nugroho</a>
-                ||<a href="https://banwork.dev/">Muhamad Faqih Azhar</a>
-                ||<a href="https://banwork.dev/">Feby Setyany Lestari ||</a>
+                <a href="https://banwork.dev/">Bayu Aji Nugroho</a>
               </span>
             </div>
           </footer>

@@ -8,29 +8,17 @@ import "swiper/css/pagination";
 import "swiper/css/autoplay";
 import { CookieKeys, CookieStorage } from "../utils/cookies";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { AllMoviesRedux } from "../redux/actions/moviePopularAction";
 
 export const Carousel = () => {
-  const authToken = CookieStorage.get(CookieKeys.AuthToken);
-  const [popularMovies, setPopularMovies] = useState([]);
-  const navigate = useNavigate();
-
-  const getMovies = async () => {
-    try {
-      const data = await fetchMovie(authToken);
-      setPopularMovies(data.data);
-    } catch (error) {
-      console.error("Error fetching movies:", error);
-    }
-  };
+  const dataMovies = useSelector((state) => state.movies);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (authToken) {
-      getMovies();
-    } else {
-      navigate("/login");
-    }
-  }, [authToken]);
-
+    dispatch(AllMoviesRedux())
+  }, [dispatch])
+  
   return (
     <div>
       <Swiper
@@ -48,7 +36,7 @@ export const Carousel = () => {
         className="mySwiper"
       >
         <div>
-          {popularMovies.map((movie) => (
+          {dataMovies?.dataAllMovies.map((movie) => (
             <SwiperSlide key={movie.id}>
               <div className="h-screen w-full">
                 <img

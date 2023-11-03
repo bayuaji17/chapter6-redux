@@ -3,33 +3,31 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useMovieDataQuery } from "../services/get-search-movie";
 import { Navbar } from "../components/navbar/Navbar";
-import { useGetDataUser } from "../utils/auth/get_user";
+import { useDispatch, useSelector } from "react-redux";
+import { setSearchResult } from "../redux/reducers/movie/searchResultReducer";
 
 export const SearchResult = () => {
   const { query } = useParams();
   const baseImg = process.env.REACT_APP_BASEIMAGE_URL;
-  const [searchResult, setSearchResult] = useState([]);
+  const dispatch = useDispatch();
   const [page, setPage] = useState(1);
   const navigate = useNavigate();
-
+  const searchResult = useSelector((state) => state.search);
   const { data: searchQuery } = useMovieDataQuery({
     page: page,
     query: query || "",
   });
 
-  const { data: getUser, isSuccess } = useGetDataUser();
-
   useEffect(() => {
-    if (isSuccess) {
-      searchData();
-    }
+    searchData();
   });
 
   const searchData = () => {
     if (searchQuery) {
-      setSearchResult(searchQuery.data);
+      dispatch(setSearchResult(searchQuery.data));
     }
   };
+
   const movePage = (direction) => {
     setPage((prevPage) => {
       const nextPage = prevPage + direction;
@@ -65,21 +63,20 @@ export const SearchResult = () => {
       </div>
 
       <div className="flex flex-wrap justify-around">
-        {searchQuery?.data &&
-          searchQuery.data.map((movie, index) => (
-            <div key={index}>
-              <div className="max-h-full w-12/12 rounded-xl border-4 border-[#be185d] my-10 mx-10 hover:shadow-xl hover:shadow-red-500">
-                <div className="">
-                  <img
-                    src={`${baseImg}/${movie.poster_path}`}
-                    alt=""
-                    className="h-[35rem] w-full rounded-lg object-cover hover:cursor-pointer"
-                    onClick={() => handleGoToDetails(movie.id)}
-                  />
-                </div>
+        {searchResult?.searchResults?.map((movie) => (
+          <div key={movie.id}>
+            <div className="max-h-full w-12/12 rounded-xl border-4 border-[#be185d] my-10 mx-10 hover:shadow-xl hover:shadow-red-500">
+              <div className="">
+                <img
+                  src={`${baseImg}/${movie.poster_path}`}
+                  alt=""
+                  className="h-[35rem] w-full rounded-lg object-cover hover:cursor-pointer"
+                  onClick={() => handleGoToDetails(movie.id)}
+                />
               </div>
             </div>
-          ))}
+          </div>
+        ))}
       </div>
     </div>
   );

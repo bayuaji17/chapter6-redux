@@ -3,11 +3,10 @@ import { Navbar } from "../components/navbar/Navbar";
 import { Carousel } from "../components/Carousel";
 import { Slider } from "../components/Slider";
 import { FooterComponent } from "../components/Footer";
-import { useGetDataUser } from "../utils/auth/get_user";
 
 export const Homepages = () => {
-  const { data: getUser } = useGetDataUser();
-
+ 
+  
   return (
     <div className="bg-slate-900">
       <div className="absolute top-0 right-0 bottom-0 left-0">

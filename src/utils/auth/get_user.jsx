@@ -3,6 +3,10 @@ import http from "../http";
 import { API_ENDPOINT } from "../api-endpoint";
 import { useNavigate } from "react-router-dom";
 
+export const fetchUserRedux = async () => {
+  return await http.get(API_ENDPOINT.GET_USER);
+};
+
 const fetchUserData = async ({ queryKey }) => {
   const [_key] = queryKey;
   const { data } = await http
@@ -16,6 +20,7 @@ const fetchUserData = async ({ queryKey }) => {
         navigate("/login");
       }
     });
+
   return data;
 };
 

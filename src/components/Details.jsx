@@ -1,13 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { API_ENDPOINT } from "../utils/api-endpoint";
 import http from "../utils/http";
+import { useDispatch, useSelector } from "react-redux";
+import { setDataDetailMovies } from "../redux/reducers/movie/detailMovieReducer";
 
 const baseImg = process.env.REACT_APP_BASEIMAGE_URL;
 
 export const Details = () => {
   const params = useParams();
-  const [detailsMovie, setDetailsMovie] = useState("");
+  const detailsMovie = useSelector((state) => state.detail.dataDetailMovies);
+  const dispatch = useDispatch();
+  console.log(detailsMovie.title)
+  console.log(detailsMovie, "dari details");
+  const getDetailMovie = async () => {
+    const response = await http.get(
+      API_ENDPOINT.MOVIE_DETAILS(params.id)
+        ? API_ENDPOINT.MOVIE_DETAILS(params.id)
+        : ""
+    );
+    // console.log(response.data.data);
+    dispatch(setDataDetailMovies(response.data.data));
+  };
+  useEffect(() => {
+    getDetailMovie();
+  }, []);
 
   const url =
     detailsMovie &&
@@ -18,23 +35,11 @@ export const Details = () => {
     : detailsMovie &&
       `https://www.youtube.com/watch?v=${detailsMovie.videos.results[0].key}`;
 
-  useEffect(() => {
-    getDetailMovie();
-  }, [params.id]);
-
-  const getDetailMovie = async () => {
-    const response = await http.get(
-      API_ENDPOINT.MOVIE_DETAILS(params.id)
-        ? API_ENDPOINT.MOVIE_DETAILS(params.id)
-        : ""
-    );
-
-    setDetailsMovie(response.data.data);
-  };
 
   const date = detailsMovie && detailsMovie.release_date.substring(0, 4);
   const rate = detailsMovie && detailsMovie.vote_average.toFixed(1);
   return (
+
     <div>
       <div className="w-full h-screen">
         <div

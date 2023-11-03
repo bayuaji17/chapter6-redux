@@ -5,42 +5,23 @@ import { fetchMovie } from "../services/get-movie";
 import { CookieKeys, CookieStorage } from "../utils/cookies";
 import { Navbar } from "../components/navbar/Navbar";
 import { useGetDataUser } from "../utils/auth/get_user";
+import { useDispatch, useSelector } from "react-redux";
+import { AllMoviesRedux } from "../redux/actions/moviePopularAction";
 
 export const AllMovies = () => {
-  const authToken = CookieStorage.get(CookieKeys.AuthToken);
-  const baseImg = process.env.REACT_APP_BASEIMAGE_URL;
-  const [allMovie, setAllMovie] = useState([]);
-  const [isFirstPage, setIsFirstPage] = useState(true);
-  const [isLastPage, setIsLastPage] = useState(false);
-  const navigate = useNavigate();
-  const [pageNow, setPageNow] = useState(1);
-  const loadNextPage = () => {
-    if (!isLastPage) {
-      setPageNow(pageNow + 1);
-    }
-  };
-  const loadPreviousPage = () => {
-    if (!isFirstPage) {
-      setPageNow(pageNow - 1);
-    }
-  };
-  const getMovies = async (page) => {
-    try {
-      const data = await fetchMovie(authToken, page);
-      setAllMovie(data.data);
-      setIsFirstPage(page === 1);
-    } catch (error) {
-      console.error("Error fetching movies:", error);
-    }
-  };
 
-  const { data: getUser, isSuccess } = useGetDataUser();
+  const baseImg = process.env.REACT_APP_BASEIMAGE_URL;
+
+  const dataMovies = useSelector((state) => state.movies);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
 
   useEffect(() => {
-    if (isSuccess) {
-      getMovies(pageNow);
-    }
-  }, [pageNow]);
+    dispatch(AllMoviesRedux())
+  }, [dispatch])
+  
+  
 
   const handleGoToDetails = (movie_id) => {
     navigate(`/details/${movie_id}`);
@@ -53,7 +34,7 @@ export const AllMovies = () => {
       <h1 className="font-black text-4xl px-10 pt-20 pb-5 text-red-500 ">
         All Movies
       </h1>
-      <div className="flex flex-row justify-end mx-14">
+      {/* <div className="flex flex-row justify-end mx-14">
         <button
           onClick={loadPreviousPage}
           disabled={isFirstPage}
@@ -68,9 +49,9 @@ export const AllMovies = () => {
         >
           Next
         </button>
-      </div>
+      </div> */}
       <div className="flex flex-wrap justify-around">
-        {allMovie.map((movie, index) => (
+        {dataMovies?.dataAllMovies?.map((movie, index) => (
           <div key={index}>
             <div className="max-h-full w-12/12 rounded-xl border-4 border-[#be185d] my-10 mx-10 hover:shadow-xl hover:shadow-red-500">
               <div className="">
