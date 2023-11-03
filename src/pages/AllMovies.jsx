@@ -1,10 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FooterComponent } from "../components/Footer";
-import { fetchMovie } from "../services/get-movie";
-import { CookieKeys, CookieStorage } from "../utils/cookies";
 import { Navbar } from "../components/navbar/Navbar";
-import { useGetDataUser } from "../utils/auth/get_user";
 import { useDispatch, useSelector } from "react-redux";
 import { AllMoviesRedux } from "../redux/actions/moviePopularAction";
 
@@ -34,22 +31,6 @@ export const AllMovies = () => {
       <h1 className="font-black text-4xl px-10 pt-20 pb-5 text-red-500 ">
         All Movies
       </h1>
-      {/* <div className="flex flex-row justify-end mx-14">
-        <button
-          onClick={loadPreviousPage}
-          disabled={isFirstPage}
-          className="mr-3 flex h-8 items-center justify-center rounded-lg bg-red-600 px-3 text-sm font-medium text-white w-20 hover:bg-red-800"
-        >
-          Previous
-        </button>
-        <button
-          onClick={loadNextPage}
-          disabled={isLastPage}
-          className="mr-3 flex h-8 items-center justify-center rounded-lg bg-red-600 px-3 text-sm font-medium text-white w-20 hover:bg-red-800"
-        >
-          Next
-        </button>
-      </div> */}
       <div className="flex flex-wrap justify-around">
         {dataMovies?.dataAllMovies?.map((movie, index) => (
           <div key={index}>

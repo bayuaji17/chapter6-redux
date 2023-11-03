@@ -3,8 +3,6 @@ import { LoginUserRedux } from "../../utils/auth/login_user";
 import { CookieKeys, CookieStorage } from "../../utils/cookies";
 import { setToken } from "../reducers/auth/authLoginReducer";
 
-
-
 export const LoginUser = (input) => (dispatch) => {
 
     LoginUserRedux(input).then((result) => {
@@ -18,7 +16,6 @@ export const LoginUser = (input) => (dispatch) => {
     })
 
 }
-
 
 export const LogOut = (input) => (dispatch) => {
     dispatch(setToken(undefined));

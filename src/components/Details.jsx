@@ -11,15 +11,12 @@ export const Details = () => {
   const params = useParams();
   const detailsMovie = useSelector((state) => state.detail.dataDetailMovies);
   const dispatch = useDispatch();
-  console.log(detailsMovie.title)
-  console.log(detailsMovie, "dari details");
   const getDetailMovie = async () => {
     const response = await http.get(
       API_ENDPOINT.MOVIE_DETAILS(params.id)
         ? API_ENDPOINT.MOVIE_DETAILS(params.id)
         : ""
     );
-    // console.log(response.data.data);
     dispatch(setDataDetailMovies(response.data.data));
   };
   useEffect(() => {

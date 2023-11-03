@@ -8,6 +8,7 @@ import { Login } from "../components/Login";
 import { Register } from "../components/Register";
 import { Protected } from "../components/Protected";
 import { MyAccount } from "../pages/MyAccount";
+import { NotFound } from "../pages/NotFound";
 
 export const RouterDefault = () => {
   return (
@@ -56,6 +57,7 @@ export const RouterDefault = () => {
             </Protected>
           }
         />
+        <Route path="*" element={<NotFound/>} />
       </Routes>
     </BrowserRouter>
   );
