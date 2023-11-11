@@ -9,6 +9,7 @@ import { Register } from "../components/Register";
 import { Protected } from "../components/Protected";
 import { MyAccount } from "../pages/MyAccount";
 import { NotFound } from "../pages/NotFound";
+import { NewPage } from "../pages/NewPage";
 
 export const RouterDefault = () => {
   return (
@@ -57,6 +58,7 @@ export const RouterDefault = () => {
             </Protected>
           }
         />
+        <Route path="/newpage" element={<NewPage/>}/>
         <Route path="*" element={<NotFound/>} />
       </Routes>
     </BrowserRouter>
